@@ -21,6 +21,7 @@ type server struct {
 }
 
 var last time.Time
+var nekoray_debug bool
 
 func (s *server) KeepAlive(ctx context.Context, in *EmptyReq) (*EmptyResp, error) {
 	last = time.Now()
@@ -30,7 +31,11 @@ func (s *server) KeepAlive(ctx context.Context, in *EmptyReq) (*EmptyResp, error
 func Main() {
 	_token := flag.String("token", "", "")
 	_port := flag.Int("port", 19810, "")
+	_debug := flag.Bool("debug", false, "")
 	flag.CommandLine.Parse(os.Args[2:])
+
+	nekoray_debug = *_debug
+	nekoray_debug = true
 
 	go func() {
 		t := time.NewTicker(time.Second * 10)
